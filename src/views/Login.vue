@@ -1,7 +1,5 @@
 <template>
-    <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png"/>
-
+    <div id="login-page">
         <!-- Check that the SDK client is not currently loading before accessing is methods -->
         <div v-if="!$auth.loading">
             <!-- show login when not authenticated -->
@@ -16,9 +14,6 @@
     export default {
         name: "Login",
         watch: {
-            '$auth.loading': {handler(newValue, oldValue) {
-
-            }}
         },
         created() {
         },
@@ -26,6 +21,7 @@
             // Log the user in
             login() {
                 console.log(this.$auth.loginWithRedirect());
+                console.log(this.$auth);
             },
             // Log the user out
             logout() {
