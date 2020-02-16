@@ -2,8 +2,8 @@
     <nav class="layout">
         <div><router-link to="/"><img src="@/assets/logo.png" class="logo"/></router-link></div>
         <v-layout page-links>
-            <router-link to="/"><div class="page-link">Test</div></router-link>
-            <router-link to="/"><div class="page-link">Test</div></router-link>
+            <router-link to="/matches"><div class="page-link">Matches</div></router-link>
+            <router-link to="/games"><div class="page-link">Games</div></router-link>
         </v-layout>
         <div>
             <router-link to="/login">Login</router-link>
@@ -30,10 +30,19 @@
             height 100%
             > *
                 height 100%
+                display block
+                padding 20px
+                transition 0.1s all
+                border-left transparent 2px solid
+                border-right transparent 2px solid
                 &:first-child
                     margin-left auto
                 &:last-child
                     margin-right auto
+                &:hover
+                    border-bottom black 2px solid
+                &.router-link-active
+                    border-bottom black 2px solid
 
     img
         max-height 100%

@@ -27,7 +27,8 @@ export const useAuth0 = ({
         user: {},
         auth0Client: null,
         popupOpen: false,
-        error: null
+        error: null,
+        token: null,
       };
     },
     methods: {
@@ -69,9 +70,11 @@ export const useAuth0 = ({
         return this.auth0Client.getIdTokenClaims(o);
       },
       /** Returns the access token. If the token is invalid or missing, a new one is retrieved */
-      getTokenSilently(o) {
+      async getTokenSilently(o) {
         window.auth0c = this.auth0Client;
-        return this.auth0Client.getTokenSilently(o);
+        let token = await this.auth0Client.getTokenSilently(o);
+        this.token = token;
+        return token;
       },
       /** Gets the access token using a popup window */
 
@@ -81,6 +84,17 @@ export const useAuth0 = ({
       /** Logs the user out and removes their session on the authorization server */
       logout(o) {
         return this.auth0Client.logout(o);
+      },
+      async can(permission, o) {
+        let permissions = await this.auth0Client.getPermissions(o);
+        return permissions.indexOf(permission) !== -1;
+      },
+      async getPermissions(o) {
+         let token = await this.auth0Client.getTokenSilently(o);
+         let body = token.split('.')[1];
+         let decodedBody = JSON.parse(atob(body));
+         let permissions = decodedBody.permissions;
+         return permissions;
       }
     },
     /** Use this lifecycle method to instantiate the SDK client */
