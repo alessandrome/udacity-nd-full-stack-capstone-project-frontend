@@ -4,7 +4,9 @@ import router from './router'
 import store from './store'
 import axios from '@/plugins/axios'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
+import i18n from "./plugins/i18n";
 import '@/style/app.styl'
+import '@mdi/font/css/materialdesignicons.css'
 
 // Import the Auth0 configuration
 let domain = process.env.VUE_APP_CLIENT_DOMAIN;
@@ -28,12 +30,15 @@ Vue.use(Auth0Plugin, {
   }
 });
 
+//Vue.use(i18n);
+
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
 export default new Vue({
   router,
   store,
+  i18n,
   vuetify,
   render: h => h(App)
 }).$mount('#app');
