@@ -24,6 +24,7 @@
                     :headers="gameHeader"
                     :items="gameList"
                     item-key="id"
+                    disable-sort
                     :page="gamePage"
                     :items-per-page.sync="gamePerPage"
                     :footer-props.sync="gamePageFooterProps"
@@ -64,7 +65,7 @@
                 gameListLoadingCount: 0,
                 gameSearchTerm: '',
                 filterCount: 0,
-                isGameSaveDialogOpen: true,
+                isGameSaveDialogOpen: false,
                 openedGame: null,
             }
         },

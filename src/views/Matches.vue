@@ -8,6 +8,7 @@
                     :page="matchPage"
                     :footer-props.sync="matchPageFooterProps"
                     :server-items-length="matchCount"
+                    disable-sort
                     class="v-data-table--full-page"
                 ></v-data-table>
             </v-flex>
