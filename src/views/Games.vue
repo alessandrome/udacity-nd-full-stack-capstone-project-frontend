@@ -1,5 +1,11 @@
 <template>
     <v-container fluid>
+<!--        <v-dialog v-model="isGameSaveDialogOpen"></v-dialog>-->
+        <games-save-game-dialog
+            v-model="isGameSaveDialogOpen"
+            @create:game="gameCreated"
+        ></games-save-game-dialog>
+
         <v-layout column>
             <v-flex filter-row>
                 <v-layout>
@@ -10,7 +16,7 @@
                         class="filter-row--search-term"
                     ></v-text-field>
                     <v-spacer></v-spacer>
-                    <v-btn v-if="can('create:game')">{{ $t('create') }}</v-btn>
+                    <v-btn v-if="can('create:game')" @click="openSaveGameDialog">{{ $t('create') }}</v-btn>
                 </v-layout>
             </v-flex>
             <v-flex>
@@ -32,11 +38,13 @@
 
 <script>
     import AuthMixin from '@/mixins/AuthMixin';
+    import GamesSaveGameDialog from "@/views/Games/GamesSaveGameDialog";
     import GamesApi from '@/api/games';
 
     export default {
         name: "Games",
         mixins: [AuthMixin],
+        components: {GamesSaveGameDialog},
         data() {
             return {
                 gameList: [],
@@ -56,6 +64,8 @@
                 gameListLoadingCount: 0,
                 gameSearchTerm: '',
                 filterCount: 0,
+                isGameSaveDialogOpen: true,
+                openedGame: null,
             }
         },
         computed: {
@@ -65,7 +75,7 @@
                 this.loadGames(true)
             },
             gamePage(newPage, oldPage) {
-                this.loadGames(true);
+                this.loadGames();
             },
             gameSearchTerm(newTerm, oldTerm) {
                 this.filterGames();
@@ -97,6 +107,17 @@
                     if (filterCount === this.filterCount)
                         this.loadGames(true);
                 }, 300);
+            },
+            openSaveGameDialog(game) {
+                this.openedGame = game;
+                this.isGameSaveDialogOpen = true;
+            },
+            gameCreated(game) {
+                this.loadGames(true);
+                this.closeSaveGameDialog();
+            },
+            closeSaveGameDialog() {
+                this.isGameSaveDialogOpen = false;
             }
         },
     }

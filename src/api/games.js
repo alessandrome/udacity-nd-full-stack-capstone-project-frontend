@@ -13,7 +13,28 @@ const requests = {
     getGames(data, filters, page, perPage) {
         return axios.
             get(`${BASE_URL}/games`, {params: Object.assign({}, data, filters, {page, perPage})});
-    }
+    },
+
+    /**
+     * Get API request to get match list from API endpoint
+     * @param data
+     * @returns {Promise<AxiosResponse<T>>}
+     */
+    createGame(data) {
+        return axios.
+            post(`${BASE_URL}/games`, Object.assign({}, data));
+    },
+
+    /**
+     * Get API request to get match list from API endpoint
+     * @param id Id of game to edit
+     * @param data
+     * @returns {Promise<AxiosResponse<T>>}
+     */
+    patchGame(id, data) {
+        return axios.
+            patch(`${BASE_URL}/games/${id}`, Object.assign({}, data));
+    },
 };
 
 export default {
