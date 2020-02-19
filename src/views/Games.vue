@@ -1,9 +1,10 @@
 <template>
     <v-container fluid>
-<!--        <v-dialog v-model="isGameSaveDialogOpen"></v-dialog>-->
+        <!--        <v-dialog v-model="isGameSaveDialogOpen"></v-dialog>-->
         <games-save-game-dialog
             v-model="isGameSaveDialogOpen"
-            @create:game="gameCreated"
+            :game="openedGame"
+            @save:game="gameSaved"
         ></games-save-game-dialog>
 
         <v-layout column>
@@ -31,7 +32,17 @@
                     :server-items-length="gameCount"
                     :loading="gameListLoading"
                     class="v-data-table--full-page"
-                ></v-data-table>
+                >
+                    <template v-slot:item.action="{ item }">
+                        <v-icon
+                            v-if="can('edit:game')"
+                            small
+                            @click="openSaveGameDialog(item)"
+                        >
+                            create
+                        </v-icon>
+                    </template>
+                </v-data-table>
             </v-flex>
         </v-layout>
     </v-container>
@@ -59,6 +70,7 @@
                 },
                 gameHeader: [
                     {text: this.$tc('name', 1), value: 'name'},
+                    {text: this.$tc('action', 1), value: 'action', sortable: false},
                     // {text: 'name', value: 'name'},
                 ],
                 gameListLoading: false,
@@ -69,8 +81,7 @@
                 openedGame: null,
             }
         },
-        computed: {
-        },
+        computed: {},
         watch: {
             gamePerPage(newValue, oldValue) {
                 this.loadGames(true)
@@ -113,7 +124,7 @@
                 this.openedGame = game;
                 this.isGameSaveDialogOpen = true;
             },
-            gameCreated(game) {
+            gameSaved(game) {
                 this.loadGames(true);
                 this.closeSaveGameDialog();
             },

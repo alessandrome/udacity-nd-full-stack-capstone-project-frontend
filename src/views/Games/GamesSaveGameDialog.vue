@@ -5,7 +5,7 @@
                 {{ $t(gameId ? 'save_game' : 'create_game')}}
             </v-card-title>
             <v-card-text>
-                <v-form ref="gameDialogForm">
+                <v-form ref="gameDialogForm" @submit.prevent="() => false">
                     <v-layout wrap>
                         <v-flex xs12>
                             <v-text-field
@@ -63,8 +63,12 @@
                 set(v) {
                     this.$emit('input', v);
                 }
+            },
+        },
+        watch: {
+            game(newValue) {
+                this.setGameData(newValue);
             }
-
         },
         methods: {
             saveGame() {
@@ -89,12 +93,13 @@
                  let data = {
                     name: this.gameName,
                 };
-                let result = await GameApi.requests.patcheGame(this.gameId, data);
+                let result = await GameApi.requests.patchGame(this.gameId, data);
                 console.log({result});
                 this.$emit('update:game', result.data);
                 this.$emit('save:game', result.data);
             },
             setGameData(game) {
+                console.log(game)
                 if (game) {
                     this.gameId = game.id || 0;
                     this.gameName = game.name || '';
