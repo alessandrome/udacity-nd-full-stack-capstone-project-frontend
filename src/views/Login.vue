@@ -20,7 +20,7 @@
         methods: {
             // Log the user in
             login() {
-                console.log(this.$auth.loginWithRedirect());
+                console.log(this.$auth.loginWithPopup());
                 console.log(this.$auth);
             },
             // Log the user out

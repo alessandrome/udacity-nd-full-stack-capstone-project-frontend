@@ -10,7 +10,16 @@
 
     export default {
         name: 'App',
-        components: {Navbar}
+        components: {Navbar},
+        created() {window.$auth = this.$auth},
+        watch: {
+            '$auth.token': {
+                handler(newValue) {
+                    console.log({newValue});
+                    this.$store.dispatch('auth/GET_USER_INFO', newValue ? this.$auth.user : null);
+                }
+            },
+        },
     }
 </script>
 
