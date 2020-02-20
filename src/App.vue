@@ -15,7 +15,6 @@
         watch: {
             '$auth.token': {
                 handler(newValue) {
-                    console.log({newValue});
                     this.$store.dispatch('auth/GET_USER_INFO', newValue ? this.$auth.user : null);
                 }
             },

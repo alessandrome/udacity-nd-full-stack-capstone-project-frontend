@@ -13,7 +13,11 @@ const requests = {
     getMatches(data, filters, page, perPage) {
         return axios.
             get(`${BASE_URL}/matches`, {props: Object.assign({}, data, filters, {page, perPage})});
-    }
+    },
+    createMatch(data) {
+        return axios.
+            post(`${BASE_URL}/matches`, Object.assign({}, data));
+    },
 };
 
 export default {

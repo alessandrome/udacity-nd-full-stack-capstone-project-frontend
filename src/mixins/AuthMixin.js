@@ -1,5 +1,5 @@
 // define a mixin object
-const authMixin = {
+const AuthMixin = {
     data() {
         return {
             auth0Permissions: [],
@@ -23,4 +23,4 @@ const authMixin = {
     }
 };
 
-export default authMixin;
+export default AuthMixin;
