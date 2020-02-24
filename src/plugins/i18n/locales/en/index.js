@@ -13,4 +13,7 @@ export default {
     'save': 'Salva',
 
     'error_input_field_required': 'Field is required',
+
+    'snackbar_success_join_to_match': 'User joined to the match',
+    'snackbar_success_disjoin_to_match': 'User disjoined to the match',
 }

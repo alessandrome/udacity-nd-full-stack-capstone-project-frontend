@@ -8,11 +8,12 @@ const module = {
     },
     mutations: {
         setUser(state, user) {
-            this.user = user;
+            state.user = user;
         },
     },
     actions: {
         async GET_USER_INFO(context, auth0user) {
+            console.log({auth0user})
             if (auth0user) {
                 let response = await UsersApi.requests.getUserInfo(auth0user);
                 context.commit('setUser', Object.assign(response.data, auth0user));

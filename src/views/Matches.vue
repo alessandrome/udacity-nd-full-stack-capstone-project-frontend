@@ -32,8 +32,9 @@
                             <td class="text-center"><div>{{props.item.participants.length}}/{{props.item.max_participants}}</div></td>
                             <td class="text-center"><div>{{props.item.tournament && props.item.tournament.name}}</div></td>
                             <td lass="text-center">
-                                <v-btn v-if="canJoinMatch(props.item)" small icon>person_add</v-btn>
-                                <v-btn v-if="canDeleteMatch(props.item)" small icon>close</v-btn>
+                                <v-btn v-if="canJoinMatch(props.item)" small icon @click="joinMatch(props.item)"><v-icon>person_add</v-icon></v-btn>
+                                <v-btn v-if="canDisjoinMatch(props.item)" small icon @click="disjoinMatch(props.item)"><v-icon>person_add_disabled</v-icon></v-btn>
+                                <v-btn v-if="canDeleteMatch(props.item)" small icon><v-icon>close</v-icon></v-btn>
                             </td>
                         </tr>
                     </template>
@@ -120,9 +121,41 @@
                 if (match.participants.findIndex(p => p.id === this.loggedUser.id) !== -1) return false;
                 return true;
             },
+            canDisjoinMatch(match) {
+                if (!this.loggedUser) return false;
+                if (match.tournament) return false;
+                if (match.participants.findIndex(p => p.id === this.loggedUser.id) !== -1) return true;
+                return false;
+            },
             canDeleteMatch(match) {
                 return ((this.loggedUser && this.loggedUser.id === match.creator_id) || (this.can('delete:any-match')));
             },
+            async joinMatch(match) {
+                let data = {
+                    action: 'join',
+                };
+                await MatchApi.requests.patchMatch(match.id, data)
+                    .then(response => {
+                        this.$store.dispatch('snackbar/SHOW_MESSAGE', {text:this.$t('snackbar_success_join_to_match'), color: 'success'});
+                        this.loadMatches(true);
+                    })
+                    .catch(response => {
+                        this.$store.dispatch('snackbar/SHOW_MESSAGE', {text: response.data.message, color: 'error'});
+                    });
+            },
+            async disjoinMatch(match) {
+                let data = {
+                    action: 'disjoin',
+                };
+                await MatchApi.requests.patchMatch(match.id, data)
+                    .then(response => {
+                        this.$store.dispatch('snackbar/SHOW_MESSAGE', {text:this.$t('snackbar_success_disjoin_to_match'), color: 'success'});
+                        this.loadMatches(true);
+                    })
+                    .catch(response => {
+                        this.$store.dispatch('snackbar/SHOW_MESSAGE', {text: response.data.message, color: 'error'});
+                    });
+            }
         },
     }
 </script>

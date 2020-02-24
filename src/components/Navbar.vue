@@ -6,6 +6,7 @@
             <router-link to="/games"><div class="page-link">Games</div></router-link>
         </v-layout>
         <div>
+            <router-link v-if="$auth.isAuthenticated && loggedUser" to="/profile" class="mr-2">{{loggedUser.name || '[profile]'}}</router-link>
             <router-link to="/login">Login</router-link>
         </div>
     </nav>
@@ -13,7 +14,12 @@
 
 <script>
     export default {
-        name: "Navbar"
+        name: "Navbar",
+        computed: {
+            loggedUser() {
+                return this.$store.getters['auth/user'];
+            }
+        },
     }
 </script>
 

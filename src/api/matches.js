@@ -14,9 +14,17 @@ const requests = {
         return axios.
             get(`${BASE_URL}/matches`, {props: Object.assign({}, data, filters, {page, perPage})});
     },
+    getMatch(uuid) {
+        return axios.
+            get(`${BASE_URL}/matches/${uuid}`);
+    },
     createMatch(data) {
         return axios.
             post(`${BASE_URL}/matches`, Object.assign({}, data));
+    },
+    patchMatch(matchId, data) {
+        return axios.
+            patch(`${BASE_URL}/matches/${matchId}`, Object.assign({}, data));
     },
 };
 
