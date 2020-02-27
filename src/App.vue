@@ -12,7 +12,9 @@
         name: 'App',
         components: {Navbar},
         created() {
-            window.$auth = this.$auth},
+            window.$auth = this.$auth;
+            this.$root.$showSnackbar = this.showSnackbar;
+        },
         watch: {
             '$auth.isAuthenticated': {
                 handler() {
@@ -21,7 +23,6 @@
             },
             '$auth.token': {
                 handler(newValue) {
-                    console.log('aaaaaaa', {newValue})
                     this.$store.dispatch('auth/GET_USER_INFO', newValue ? this.$auth.user : null);
                 }
             },
@@ -29,6 +30,9 @@
         methods: {
             setLoggedUser(token) {
                 this.$store.dispatch('auth/GET_USER_INFO', token ? this.$auth.user : null);
+            },
+            showSnackbar(text, props) {
+                this.$store.dispatch('snackbar/SHOW', Object.assign({}, props, {text}));
             }
         },
     }

@@ -22,7 +22,8 @@ const requests = {
         return axios.
             post(`${BASE_URL}/matches`, Object.assign({}, data));
     },
-    patchMatch(matchId, data) {
+    patchMatch(matchId, action, data) {
+        data = data || {};
         return axios.
             patch(`${BASE_URL}/matches/${matchId}`, Object.assign({}, data));
     },

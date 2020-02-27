@@ -24,7 +24,7 @@
         },
         methods: {
             ...mapMutations(["closeSnackbar"])
-        }
+        },
     }
 </script>
 

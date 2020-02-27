@@ -17,6 +17,11 @@ const vDialogComponentMixin = {
             }
         },
     },
+    methods: {
+        closeDialog() {
+            this.showDialog = false;
+        }
+    },
 };
 
 export default vDialogComponentMixin;
