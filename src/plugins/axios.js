@@ -3,7 +3,12 @@ import vueInstance from '@/main.js'
 
 axios.interceptors.request.use(
     async (config) => {
-        let token = await vueInstance.$auth.getTokenSilently();
+        let token
+        try {
+            token = await vueInstance.$auth.getTokenSilently();
+        } catch (e) {
+            token = null;
+        }
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
