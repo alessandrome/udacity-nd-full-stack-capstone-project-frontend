@@ -27,6 +27,15 @@ const requests = {
         return axios.
             patch(`${BASE_URL}/matches/${matchId}`, Object.assign({}, data));
     },
+    /**
+     *
+     * @param matchId
+     * @param joined {1|0}
+     */
+    getMatchUsers(matchId, joined = 1) {
+        return axios.
+            get(`${BASE_URL}/matches/${matchId}/users`, {params: Object.assign({}, {joined})});
+    }
 };
 
 export default {
