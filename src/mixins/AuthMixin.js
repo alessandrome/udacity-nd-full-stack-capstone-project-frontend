@@ -18,7 +18,11 @@ const AuthMixin = {
             return this.auth0Permissions.indexOf(permission) !== -1;
         },
         async loadAuth0Permission() {
-            this.auth0Permissions = await this.$auth.getPermissions();
+            try {
+                this.auth0Permissions = await this.$auth.getPermissions();
+            } catch (e) {
+                this.auth0Permissions = [];
+            }
         },
     }
 };
