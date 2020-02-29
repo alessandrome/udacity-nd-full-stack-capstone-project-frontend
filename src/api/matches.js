@@ -25,7 +25,7 @@ const requests = {
     patchMatch(matchId, action, data) {
         data = data || {};
         return axios.
-            patch(`${BASE_URL}/matches/${matchId}`, Object.assign({}, data));
+            patch(`${BASE_URL}/matches/${matchId}`, Object.assign({}, data, {action}));
     },
     /**
      *

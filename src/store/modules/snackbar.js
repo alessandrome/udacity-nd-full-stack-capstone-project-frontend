@@ -11,7 +11,7 @@ const module = {
     },
     actions: {
         SHOW_MESSAGE(state, payload) {
-            state.commit('showSnackbar', payload || {});
+            state.commit('showSnackbar', payload || {text: ''});
         }
     },
     mutations: {
