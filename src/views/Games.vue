@@ -83,13 +83,13 @@
         },
         computed: {},
         watch: {
-            gamePerPage(newValue, oldValue) {
+            gamePerPage() {
                 this.loadGames(true)
             },
-            gamePage(newPage, oldPage) {
+            gamePage() {
                 this.loadGames();
             },
-            gameSearchTerm(newTerm, oldTerm) {
+            gameSearchTerm() {
                 this.filterGames();
             },
         },
@@ -106,10 +106,18 @@
                 let loadCount = ++this.gameListLoadingCount;
                 let filter = {};
                 if (this.gameSearchTerm) filter.searchTerm = this.gameSearchTerm;
-                let r = await GamesApi.requests.getGames({}, filter, this.gamePage, this.gamePerPage);
+                await GamesApi.requests.getGames({}, filter, this.gamePage, this.gamePerPage)
+                    .then(response => {
+                        if (loadCount === this.gameListLoadingCount) {
+                            this.gameList = response.data.games;
+                            this.gameCount = response.data.total_games;
+                            this.gameListLoading = false;
+                        }
+                    })
+                    .catch(response => {
+                        // TODO: Show snackbar error
+                    });
                 if (loadCount === this.gameListLoadingCount) {
-                    this.gameList = r.data.games;
-                    this.gameCount = r.data.total_games;
                     this.gameListLoading = false;
                 }
             },
