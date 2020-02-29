@@ -1,9 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
-
-export const store = new Vuex.Store({
+const module = {
+    namespaced: true,
     state: {
         snackbar: {
             visible: false,
@@ -46,6 +42,6 @@ export const store = new Vuex.Store({
             state.snackbar.text = null;
         },
     }
-});
+};
 
-export default store;
+export default module;
