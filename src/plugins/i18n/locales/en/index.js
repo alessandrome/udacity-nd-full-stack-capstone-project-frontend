@@ -6,11 +6,13 @@ export default {
     'create_match': 'Create Match',
     'game': 'Game|Games',
     'name': 'Name|Names',
+    'no': 'No',
     'number_of_participants': 'Number of participants',
     'participant': 'Participant|Participants',
     'private': 'Private|Privates',
     'tournament': 'Tournament|Tournaments',
-    'save': 'Salva',
+    'save': 'Save',
+    'yes': 'Yes',
 
     'error_input_field_required': 'Field is required',
 

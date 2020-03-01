@@ -100,7 +100,11 @@
             '$route.params.uuid': {
                 immediate: true,
                 handler(uuid) {
-                    this.matchDetailUuid = '' + uuid;
+                    if (uuid) {
+                        this.matchDetailUuid = '' + uuid;
+                    } else {
+                        this.matchDetailUuid = '';
+                    }
                 }
             },
             matchPerPage(newValue, oldValue) {
@@ -109,7 +113,11 @@
             matchDetailUuid: {
                 immediate: true,
                 handler(uuid) {
-                    this.$router.push({name: 'matches', params: {uuid}});
+                    if (uuid) {
+                        this.$router.push({name: 'matches', params: {uuid}});
+                    } else {
+                         this.$router.push({name: 'matches', params: {}});
+                    }
                 }
             }
         },
@@ -178,7 +186,7 @@
                     });
             },
             openMatchDetail(match) {
-                this.$router.push({name: matches, params: {uuid: match.uuid}});
+                this.matchDetailUuid = match.uuid;
             }
         },
     }

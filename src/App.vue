@@ -1,5 +1,6 @@
 <template>
     <v-app id="app">
+        <snackbar></snackbar>
         <navbar id="nav"></navbar>
         <router-view v-if="!$auth.loading" id="content"/>
     </v-app>
@@ -7,12 +8,14 @@
 
 <script>
     import Navbar from "@/components/Navbar";
+    import Snackbar from "@/components/Snackbar";
 
     export default {
         name: 'App',
         components: {Navbar},
         created() {
             window.$auth = this.$auth;
+            window.store = this.$store;
             this.$root.$showSnackbar = this.showSnackbar;
         },
         watch: {
