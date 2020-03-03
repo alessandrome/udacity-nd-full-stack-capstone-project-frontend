@@ -96,10 +96,11 @@
             </v-card-text>
             <v-card-actions>
                 <v-layout>
-                    {{tournamentDateTime}}
                     <v-spacer></v-spacer>
                     <v-btn @click="showDialog = false">{{$t('cancel')}}</v-btn>
-                    <v-btn @click="saveTournament">{{$t(tournamentId ? 'save' : 'create')}}</v-btn>
+                    <v-btn :disabled="isSavingTournament" @click="saveTournament">
+                        <span>{{$t(tournamentId ? 'save' : 'create')}}</span>
+                        <v-progress-circular v-if="isSavingTournament" size="16" width="2" indeterminate></v-progress-circular></v-btn>
                 </v-layout>
             </v-card-actions>
         </v-card>
@@ -135,6 +136,7 @@
                 tournamentTimeMenu: false,
                 gameFilterCount: 0,
                 gameList: [],
+                isSavingTournament: false,
             }
         },
         computed: {
@@ -185,10 +187,17 @@
                     gameName: this.tournamentGame.name,
                     startDate: formatISO(this.tournamentDateTime),
                 };
-                let response = await TournamentApi.requests.createTournament(data);
-                let game = response.data;
-                this.$emit('create:match', game);
-                this.$emit('save:match', game);
+                this.isSavingTournament = true;
+                let response = await TournamentApi.requests.createTournament(data)
+                    .then(response => {
+                        let tournament = response.data;
+                        this.$emit('create:tournament', tournament);
+                        this.$emit('save:tournament', tournament);
+                    })
+                    .catch(response => {
+                        // TODO: Add snackbar error
+                    });
+                this.isSavingTournament = false;
             },
             async editTournament() {
             },

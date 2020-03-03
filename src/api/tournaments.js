@@ -27,6 +27,10 @@ const requests = {
         return axios.
             patch(`${BASE_URL}/tournaments/${tournamentId}`, Object.assign({}, data, {action}));
     },
+    deleteTournament(tournamentId) {
+        return axios.
+            delete(`${BASE_URL}/tournaments/${tournamentId}`);
+    },
     /**
      *
      * @param matchId

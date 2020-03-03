@@ -4,6 +4,7 @@ export default {
     'create': 'Create',
     'create_game': 'Create Game',
     'create_match': 'Create Match',
+    'create_tournament': 'Create Tournament',
     'game': 'Game|Games',
     'name': 'Name|Names',
     'no': 'No',
@@ -12,6 +13,9 @@ export default {
     'private': 'Private|Privates',
     'tournament': 'Tournament|Tournaments',
     'save': 'Save',
+    'start_date': 'Start Date',
+    'start_hour': 'Start Hour',
+    'start_time': 'Start Time',
     'yes': 'Yes',
 
     'error_input_field_required': 'Field is required',

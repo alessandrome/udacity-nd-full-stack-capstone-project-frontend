@@ -3,6 +3,7 @@
         <div><router-link to="/"><img src="@/assets/logo.png" class="logo"/></router-link></div>
         <v-layout page-links>
             <router-link to="/matches"><div class="page-link">Matches</div></router-link>
+            <router-link to="/tournaments"><div class="page-link">Tournaments</div></router-link>
             <router-link to="/games"><div class="page-link">Games</div></router-link>
         </v-layout>
         <div>

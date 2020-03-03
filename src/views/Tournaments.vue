@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-        <tournament-save-tournament-dialog v-model="isSaveTournamentDialogOpen" @save:match="tournamentSaved"></tournament-save-tournament-dialog>
+        <tournament-save-tournament-dialog v-model="isSaveTournamentDialogOpen" @save:tournament="tournamentSaved"></tournament-save-tournament-dialog>
 <!--        <matches-detail-dialog v-model="isMatchDetailOpen" :match-uuid="matchDetailUuid"></matches-detail-dialog>-->
         <v-layout column>
              <v-flex filter-row>
@@ -29,12 +29,12 @@
                 >
                     <template #item="props">
                         <tr>
-                            <td class="text-center"><div><v-btn icon @click="openTournamentDetail(props.item)"><v-icon>open_in_browser</v-icon></v-btn></div></td>
+                            <td class="text-center"><div><v-btn icon :disabled="props.item._is_deleting" @click="openTournamentDetail(props.item)"><v-icon>open_in_browser</v-icon></v-btn></div></td>
                             <td class="text-left"><div>{{props.item.name}}</div></td>
                             <td class="text-center"><div>{{props.item.participants.length}}/{{props.item.max_participants}}</div></td>
                             <td class="text-center"><div>{{props.item.tournament && props.item.tournament.name}}</div></td>
                             <td class="text-center">
-                                <v-btn v-if="canDeleteTournament(props.item)" small icon><v-icon>close</v-icon></v-btn>
+                                <v-btn v-if="canDeleteTournament(props.item)" small icon :disabled="props.item._is_deleting" @click="deleteTournament(props.item)"><v-icon>delete</v-icon></v-btn>
                             </td>
                         </tr>
                     </template>
@@ -161,7 +161,18 @@
             },
             openTournamentDetail(match) {
                 this.tournamentDetailUuid = match.uuid;
-            }
+            },
+            async deleteTournament(tournament) {
+                this.$set(tournament, '_is_deleting', true);
+                await TournamentApi.requests.deleteTournament(tournament.id)
+                    .then(response => {
+                        this.loadTournaments(true);
+                    })
+                    .catch(response => {
+                        // TODO: Add error snackbar
+                    });
+                this.$set(tournament, '_is_deleting', false);
+            },
         },
     }
 </script>
