@@ -19,7 +19,7 @@
         name: 'Snackbar',
         computed: {
             snackbar() {
-                return this.$store.snackbar.state.snackbar
+                return this.$store.state.snackbar.snackbar;
             }
         },
         methods: {

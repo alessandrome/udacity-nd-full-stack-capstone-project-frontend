@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <tournament-save-tournament-dialog v-model="isSaveTournamentDialogOpen" @save:tournament="tournamentSaved"></tournament-save-tournament-dialog>
-<!--        <matches-detail-dialog v-model="isMatchDetailOpen" :match-uuid="matchDetailUuid"></matches-detail-dialog>-->
+        <tournament-detail-dialog v-model="isTournamentDetailOpen" :tournament-uuid="tournamentDetailUuid"></tournament-detail-dialog>
         <v-layout column>
              <v-flex filter-row>
                 <v-layout>
@@ -47,13 +47,13 @@
 <script>
     import AuthMixin from '@/mixins/AuthMixin';
     import TournamentSaveTournamentDialog from "@/views/Tournaments/TournamentSaveTournamentDialog";
-    // import MatchesDetailDialog from "./Matches/MatchesDetailDialog";
+    import TournamentDetailDialog from "@/views/Tournaments/TournamentDetailDialog";
     import TournamentApi from '@/api/tournaments';
 
     export default {
         name: "Tournaments",
         mixins: [AuthMixin],
-        components: {TournamentSaveTournamentDialog},
+        components: {TournamentSaveTournamentDialog, TournamentDetailDialog},
         data() {
             return {
                 tournamentList: [],

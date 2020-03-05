@@ -12,7 +12,7 @@
 
     export default {
         name: 'App',
-        components: {Navbar},
+        components: {Navbar, Snackbar},
         created() {
             window.$auth = this.$auth;
             window.store = this.$store;
